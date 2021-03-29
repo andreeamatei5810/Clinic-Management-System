@@ -2,7 +2,7 @@ package LaboratoryTests;
 
 import java.util.Date;
 
-public class EssentialTest {
+public class EssentialTest implements Comparable <EssentialTest> {
     private int testId;
     private Date testDate;
     private int cbc;
@@ -39,5 +39,10 @@ public class EssentialTest {
 
     public void setTestDate(Date testDate) {
         this.testDate = testDate;
+    }
+
+    @Override
+    public int compareTo(EssentialTest o) {
+        return -testDate.compareTo(o.testDate);
     }
 }

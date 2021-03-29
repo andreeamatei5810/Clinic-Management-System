@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Database {
-    static public ArrayList<Doctor> dbDoctor = new ArrayList<Doctor>();
-    static public ArrayList<Patient> dbPatient = new ArrayList<Patient>();
-    static public ArrayList<Ward> dbWard = new ArrayList<Ward>();
-    static public ArrayList<Medicine> dbMedicine = new ArrayList<Medicine>();
-    static public ArrayList<Appointment> dbAppointment = new ArrayList<Appointment>();
-    static public ArrayList<EssentialTest> dbTest = new ArrayList<EssentialTest>();
+    static public ArrayList<Doctor> dbDoctor = new ArrayList<>();
+    static public ArrayList<Patient> dbPatient = new ArrayList<>();
+    static public ArrayList<Ward> dbWard = new ArrayList<>();
+    static public ArrayList<Medicine> dbMedicine = new ArrayList<>();
+    static public ArrayList<Appointment> dbAppointment = new ArrayList<>();
+    static public ArrayList<EssentialTest> dbTest = new ArrayList<>();
 
     static public void init(){
 
@@ -33,16 +33,22 @@ public class Database {
 
         String dateBirth = "02-22-1980";
         String dateHire = "01-18-2007";
-        String dateAppointment = "06-11-2021";
+        String dateAppointment = "10-12-2021";
+        String dateAppointment2 = "11-12-2021";
+        String dateAppointment3 = "12-12-2021";
         String patternDate = "MM-dd-yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(patternDate);
         Date dateBirthformat = null;
         Date dateHireformat = null;
         Date dateAppointmentformat = null;
+        Date dateAppointmentformat2 = null;
+        Date dateAppointmentformat3 = null;
         try{
             dateBirthformat = dateFormat.parse(dateBirth);
             dateHireformat = dateFormat.parse(dateHire);
             dateAppointmentformat = dateFormat.parse(dateAppointment);
+            dateAppointmentformat2 = dateFormat.parse(dateAppointment2);
+            dateAppointmentformat3 = dateFormat.parse(dateAppointment3);
 
         }
         catch(ParseException exception){
@@ -60,8 +66,8 @@ public class Database {
         Database.dbAppointment.add(new Appointment(502,Database.dbPatient.get(1),Database.dbDoctor.get(0),dateAppointmentformat, AppointmentStatus.SCHEDULED));
 
         Database.dbTest.add(new EssentialTest(600,dateAppointmentformat,1,2,3,4));
-        Database.dbTest.add(new AdvancedTest(601,dateAppointmentformat,1,2,3,4,5,6,7));
-        Database.dbTest.add(new TotalTest(602,dateAppointmentformat,1,2,3,4,5,6,7,8,9,10));
+        Database.dbTest.add(new AdvancedTest(601,dateAppointmentformat2,1,2,3,4,5,6,7));
+        Database.dbTest.add(new TotalTest(602,dateAppointmentformat3,1,2,3,4,5,6,7,8,9,10));
 
         Database.dbMedicine.add(new Medicine("Aspirin",5,"companyX"));
         Database.dbMedicine.add(new Medicine("Ketamine",20,"companyX"));

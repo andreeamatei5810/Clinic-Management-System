@@ -2,13 +2,13 @@ package Users;
 
 import LaboratoryTests.EssentialTest;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.TreeSet;
 
 public class Patient extends User {
 
     private String bloodType;
-    private ArrayList<EssentialTest> labTestsHistory;
+    private TreeSet<EssentialTest> labTestsHistory = new TreeSet<>();
     private int amountToPay;
 
     public Patient(int userId, String password, String firstName, String lastName, Date birthDate, String phoneNumber, String email, String address, String bloodType) {
@@ -30,11 +30,11 @@ public class Patient extends User {
         this.bloodType = bloodType;
     }
 
-    public ArrayList<EssentialTest> getLabTestsHistory() {
+    public TreeSet<EssentialTest> getLabTestsHistory() {
         return labTestsHistory;
     }
 
-    public void setLabTestsHistory(ArrayList<EssentialTest> labTestsHistory) {
+    public void setLabTestsHistory(TreeSet<EssentialTest> labTestsHistory) {
         this.labTestsHistory = labTestsHistory;
     }
 
