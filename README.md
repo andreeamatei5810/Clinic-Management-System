@@ -1,7 +1,7 @@
 # Clinic-Management-System
 Proiectul are ca tema un sistem de gestiune al unei clinici.
 
-In cadrul proiectului,am urmatoarele clase definite:
+In cadrul proiectului, am urmatoarele clase definite:
 - Clasa abstracta User, din care sunt mostenite clasele Admin,Doctor si Patient 
 - Clasa Ward ce reprezinta sectiile clinicii
 - Clasa Medicine cu medicamentele disponibile in clinica, ce pot fi prescrise pacientilor
