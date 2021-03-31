@@ -29,3 +29,5 @@ Admin
 - Sa schimbe statusul unei programari (si doctorul)
 - Sa vada toate sectiile
 - Sa vada toate medicamentele
+- Sa adauge un doctor
+- Sa adauge un pacient

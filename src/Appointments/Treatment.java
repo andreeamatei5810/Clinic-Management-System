@@ -3,13 +3,14 @@ package Appointments;
 import ClinicRelated.Medicine;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Treatment {
 
     private int cost;
     private int durationInWeeks;
     private String details;
-    private HashMap<Medicine,Integer> treatment;
+    private Map<Medicine, Integer> treatment = new HashMap<>();
 
     public Treatment(int cost, int durationInWeeks, String details, HashMap<Medicine, Integer> treatment) {
         this.cost = cost;
@@ -46,7 +47,7 @@ public class Treatment {
         this.details = details;
     }
 
-    public HashMap<Medicine, Integer> getTreatment() {
+    public Map<Medicine, Integer> getTreatment() {
         return treatment;
     }
 
@@ -58,5 +59,10 @@ public class Treatment {
         for(Medicine medicine:treatment.keySet()){
             cost += medicine.getPrice() * treatment.get(medicine);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Cost: " + cost +"\nDuration: "+durationInWeeks+ "\nDetails: "+details+"\nMedicines: "+treatment;
     }
 }

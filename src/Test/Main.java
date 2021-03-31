@@ -16,42 +16,36 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Database.init();
-        Scanner scanner =new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         DoctorServices ds = new DoctorServices();
         PatientServices ps = new PatientServices();
         System.out.println("Please write your email");
         String email = scanner.nextLine();
-        if(!email.equals("admin") && ds.getDoctorByEmail(email) == null && ps.getPatientByEmail(email) ==  null){
+        if (!email.equals("admin") && ds.getDoctorByEmail(email) == null && ps.getPatientByEmail(email) == null) {
             System.out.println("Sorry! Wrong email!");
-        }
-        else {
+        } else {
             System.out.println("Please write your password");
             String password = scanner.nextLine();
-            if(email.equals("admin") && password.equals("1234")){
-                Menu adminMenu = new Menu(1,"Admin");
+            if (email.equals("admin") && password.equals("1234")) {
+                Menu adminMenu = new Menu(1, "Admin");
                 adminMenu.menu();
 
-            }
-            else if(email.equals("admin") && !password.equals("1234")){
+            } else if (email.equals("admin") && !password.equals("1234")) {
                 System.out.println("Wrong password for admin");
-            }
-            else if(ds.getDoctorByEmail(email) != null){
+            } else if (ds.getDoctorByEmail(email) != null) {
                 Doctor doctor = ds.getDoctorByEmail(email);
-                if(doctor.getPassword().equals(password)){
-                    Menu doctorMenu = new Menu(doctor.getUserId(),"Doctor");
+                if (doctor.getPassword().equals(password)) {
+                    Menu doctorMenu = new Menu(doctor.getUserId(), "Doctor");
                     doctorMenu.menu();
-                }
-                else{
+                } else {
                     System.out.println("Wrong password!");
                 }
-            }
-            else{
+            } else {
                 Patient patient = ps.getPatientByEmail(email);
-                if(patient.getPassword().equals(password)){
-                    Menu patientMenu = new Menu(patient.getUserId(),"Doctor");
+                if (patient.getPassword().equals(password)) {
+                    Menu patientMenu = new Menu(patient.getUserId(), "Patient");
                     patientMenu.menu();
-                }
-                else{
+                } else {
                     System.out.println("Wrong password!");
                 }
             }

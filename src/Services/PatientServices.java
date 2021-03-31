@@ -44,13 +44,13 @@ public class PatientServices {
         return null;
     }
 
-    public void showLabResults(int id){
+    public EssentialTest getLabResults(int id){
         for(EssentialTest labTest : Database.dbTest){
             if(labTest.getTestId() == id) {
-                System.out.println(labTest);
-                break;
+                return labTest;
             }
         }
+        return null;
     }
 
     public void showFutureAppointments(int id){

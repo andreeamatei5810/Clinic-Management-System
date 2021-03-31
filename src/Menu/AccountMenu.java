@@ -16,22 +16,27 @@ public class AccountMenu {
         this.role = role;
     }
 
-    public void menu(){
+    public void menu() {
         int option = -1;
-        while(option!=0) {
-            System.out.println("0. Exit");
+        while (option != 0) {
             System.out.println("Write your choice.");
+            System.out.println("0. Exit");
             System.out.println("1. Change your password");
+            System.out.println("2. Change your phone number");
             option = scanner.nextInt();
-            switch(option){
-                case 1:{
-                    us.changePassword(role,userId);
+            switch (option) {
+                case 1: {
+                    us.changePassword(role, userId);
                     break;
                 }
-                case 0:{
+                case 2: {
+                    us.changePhoneNumber(role, userId);
                     break;
                 }
-                default:{
+                case 0: {
+                    break;
+                }
+                default: {
                     System.out.println("Invalid option!");
                 }
             }

@@ -23,6 +23,9 @@ public abstract class User {
         this.address = address;
     }
 
+    public User() {
+    }
+
     public int getUserId() {
         return userId;
     }

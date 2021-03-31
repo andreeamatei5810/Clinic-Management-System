@@ -3,12 +3,13 @@ package Users;
 import LaboratoryTests.EssentialTest;
 
 import java.util.Date;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class Patient extends User {
 
     private String bloodType;
-    private TreeSet<EssentialTest> labTestsHistory = new TreeSet<>();
+    private Set<EssentialTest> labTestsHistory = new TreeSet<>();
     private int amountToPay;
 
     public Patient(int userId, String password, String firstName, String lastName, Date birthDate, String phoneNumber, String email, String address, String bloodType) {
@@ -30,7 +31,7 @@ public class Patient extends User {
         this.bloodType = bloodType;
     }
 
-    public TreeSet<EssentialTest> getLabTestsHistory() {
+    public Set<EssentialTest> getLabTestsHistory() {
         return labTestsHistory;
     }
 

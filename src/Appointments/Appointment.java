@@ -1,6 +1,7 @@
 package Appointments;
 
 import java.util.Date;
+
 import Users.Doctor;
 import Users.Patient;
 
@@ -13,7 +14,7 @@ public class Appointment {
     private Diagnosis diagnosis;
     private Treatment treatment;
 
-    public Appointment(int appointmentId,Patient patient, Doctor doctor, Date date, AppointmentStatus status) {
+    public Appointment(int appointmentId, Patient patient, Doctor doctor, Date date, AppointmentStatus status) {
         this.appointmentId = appointmentId;
         this.patient = patient;
         this.doctor = doctor;
@@ -71,8 +72,14 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Patient Info\n" + patient.toString() + "\nDoctor Info\nName: " + doctor.getLastName() +" " + doctor.getFirstName() + "\nDate: "
-                + date.toString() + "\nWard: " + doctor.getWard().getWardName() + "\nStatus: " + status;
+        return "Id: " + appointmentId + "\nPatient Info\n" + patient.toString() + "\nDoctor Info\nName: " + doctor.getLastName() + " " + doctor.getFirstName() + "\nDate: "
+                + date.toString() + "\nWard: " + doctor.getWard().getWardName();
+    }
+
+    public String details() {
+        return "\nPatient Info\n" + patient.toString() + "\nDoctor Info\nName: " + doctor.getLastName() + " " + doctor.getFirstName() + "\nDate: "
+                + date.toString() + "\nWard: " + doctor.getWard().getWardName() + "\nStatus: " + status + "\nDiagnosis: \n" + diagnosis
+                + "\nTreatment: \n" + treatment;
     }
 
     public int getAppointmentId() {

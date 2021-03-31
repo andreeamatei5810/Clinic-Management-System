@@ -1,17 +1,21 @@
 package LaboratoryTests;
 
+import Users.Patient;
+
 import java.util.Date;
 
 public class EssentialTest implements Comparable <EssentialTest> {
     private int testId;
+    private Patient patient;
     private Date testDate;
     private int cbc;
     private int cholesterol;
     private int tsh;
     private int creatinine;
 
-    public EssentialTest(int testId, Date testDate, int cbc, int cholesterol, int tsh, int creatinine) {
+    public EssentialTest(int testId, Patient patient,Date testDate, int cbc, int cholesterol, int tsh, int creatinine) {
         this.testId = testId;
+        this.patient = patient;
         this.testDate = testDate;
         this.cbc = cbc;
         this.cholesterol = cholesterol;
@@ -44,5 +48,13 @@ public class EssentialTest implements Comparable <EssentialTest> {
     @Override
     public int compareTo(EssentialTest o) {
         return -testDate.compareTo(o.testDate);
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }
