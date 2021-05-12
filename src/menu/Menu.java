@@ -1,6 +1,7 @@
 package menu;
 
 import laboratoryTests.EssentialTest;
+import services.AuditService;
 import services.CsvReaderWriter;
 import services.PatientServices;
 
@@ -14,6 +15,7 @@ public class Menu {
     ClinicMenu clinicMenu;
     PatientServices ps = new PatientServices();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
+    AuditService auditService= AuditService.getInstance();
     Scanner scanner = new Scanner(System.in);
 
     public Menu(int userId, String role) {
@@ -63,7 +65,7 @@ public class Menu {
                         System.out.println("This is not you lab result!");
                     } else if (test != null) {
                         System.out.println(test);
-                        csvReaderWriter.writeToAudit("Read laboratory test");
+                        auditService.writeToAudit("Read laboratory test");
                     } else {
                         System.out.println("There is no test with this id!");
                     }

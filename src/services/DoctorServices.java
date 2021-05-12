@@ -7,6 +7,7 @@ import users.Doctor;
 
 public class DoctorServices {
 
+    AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
 
     public void showAllDoctors(){
@@ -14,7 +15,7 @@ public class DoctorServices {
             System.out.println(doctor);
             System.out.println("*******************************");
         }
-        csvReaderWriter.writeToAudit("Saw all doctors");
+        auditService.writeToAudit("Saw all doctors");
     }
 
     public void showAllDoctorsByWard(int wardId){
@@ -60,7 +61,7 @@ public class DoctorServices {
                 System.out.println("*******************************");
             }
         }
-        csvReaderWriter.writeToAudit("Saw future appointments");
+        auditService.writeToAudit("Saw future appointments");
     }
 
 }

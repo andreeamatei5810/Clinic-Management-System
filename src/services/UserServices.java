@@ -11,6 +11,7 @@ public class UserServices {
     Scanner scanner = new Scanner(System.in);
     DoctorServices ds = new DoctorServices();
     PatientServices ps = new PatientServices();
+    AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
 
     public void changePassword(String role, int userId) {
@@ -33,7 +34,7 @@ public class UserServices {
                 Database.dbAdmin.setPassword(newPassword);
                 System.out.println("The password has been changed!");
             }
-            csvReaderWriter.writeToAudit("Changed user password");
+            auditService.writeToAudit("Changed user password");
         } else {
             System.out.println("Invalid input!");
         }
@@ -55,7 +56,7 @@ public class UserServices {
             Database.dbAdmin.setPhoneNumber(newPhone);
             System.out.println("The phone number has been changed!");
         }
-        csvReaderWriter.writeToAudit("Changed user phone number");
+        auditService.writeToAudit("Changed user phone number");
     }
 
 

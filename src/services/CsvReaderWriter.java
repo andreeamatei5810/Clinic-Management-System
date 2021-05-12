@@ -28,17 +28,6 @@ public class CsvReaderWriter {
         return instance;
     }
 
-    public void writeToAudit(String action){
-        try {
-            File file = new File("csv/Audit.csv");
-            FileWriter fileWriter = new FileWriter(file,true);
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            fileWriter.write(action + "," + timestamp.toString() + "\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public <T> ArrayList<T> readFromCsv(String path, String objectName){
         ArrayList<T> objects = new ArrayList<>();

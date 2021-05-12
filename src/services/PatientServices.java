@@ -8,6 +8,7 @@ import users.Patient;
 
 public class PatientServices {
 
+    AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
 
     public void showAllPatients(){
@@ -15,7 +16,7 @@ public class PatientServices {
             System.out.println(patient);
             System.out.println("*******************************");
         }
-        csvReaderWriter.writeToAudit("Saw all patients");
+        auditService.writeToAudit("Saw all patients");
     }
 
     public void showPatient(int id){
@@ -61,7 +62,7 @@ public class PatientServices {
                 System.out.println("*******************************");
             }
         }
-        csvReaderWriter.writeToAudit("Saw future appointments");
+        auditService.writeToAudit("Saw future appointments");
     }
 
 }

@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class ClinicServices {
 
     Scanner scanner = new Scanner(System.in);
+    AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
 
     public void showAllWards() {
@@ -22,7 +23,7 @@ public class ClinicServices {
             System.out.println(ward);
             System.out.println("*******************************");
         }
-        csvReaderWriter.writeToAudit("Saw all wards");
+        auditService.writeToAudit("Saw all wards");
     }
 
     public static Ward getWard(int id) {
@@ -44,8 +45,8 @@ public class ClinicServices {
         Ward ward = new Ward(id,name,noPatients);
         Database.dbWard.add(ward);
         System.out.println("Success!");
-        csvReaderWriter.writeToAudit("Added a ward");
-        csvReaderWriter.writeToCsv("csv/Ward.csv",ward);
+        auditService.writeToAudit("Added a ward");
+        csvReaderWriter.writeToCsv("csv/WardWrite.csv",ward);
 
     }
 
@@ -78,7 +79,7 @@ public class ClinicServices {
             System.out.println(medicine);
             System.out.println("*******************************");
         }
-        csvReaderWriter.writeToAudit("Saw all medicine");
+        auditService.writeToAudit("Saw all medicine");
     }
 
     public Medicine getMedicine(String name) {
@@ -101,8 +102,8 @@ public class ClinicServices {
         Medicine medicine = new Medicine(name,price,companyName);
         Database.dbMedicine.add(medicine);
         System.out.println("Success!");
-        csvReaderWriter.writeToAudit("Added medicine");
-        csvReaderWriter.writeToCsv("csv/Medicine.csv",medicine);
+        auditService.writeToAudit("Added medicine");
+        csvReaderWriter.writeToCsv("csv/MedicineWrite.csv",medicine);
 
     }
 
@@ -165,8 +166,8 @@ public class ClinicServices {
         Doctor doctor = new Doctor(id, password, firstName, lastName, dateBirthformat, phone, email, address, hireDateformat, salary, ward);
         Database.dbDoctor.add(doctor);
         System.out.println("Success!");
-        csvReaderWriter.writeToAudit("Added a doctor");
-        csvReaderWriter.writeToCsv("csv/Doctor.csv",doctor);
+        auditService.writeToAudit("Added a doctor");
+        csvReaderWriter.writeToCsv("csv/DoctorWrite.csv",doctor);
     }
 
     public void addPatient() {
@@ -208,8 +209,8 @@ public class ClinicServices {
         Patient patient = new Patient(id, password, firstName, lastName, dateBirthformat, phone, email, address, blood);
         Database.dbPatient.add(patient);
         System.out.println("Success!");
-        csvReaderWriter.writeToAudit("Added a patient");
-        csvReaderWriter.writeToCsv("csv/Patient.csv",patient);
+        auditService.writeToAudit("Added a patient");
+        csvReaderWriter.writeToCsv("csv/PatientWrite.csv",patient);
     }
 
 }

@@ -17,6 +17,7 @@ public class AppointmentServices {
     PatientServices ps = new PatientServices();
     ClinicServices cs = new ClinicServices();
     Scanner scanner = new Scanner(System.in);
+    AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
 
     public Appointment getAppointment(int id) {
@@ -89,8 +90,8 @@ public class AppointmentServices {
             Appointment appointment = new Appointment((500 + Database.dbAppointment.size()), patient, doctor, appointmentDate, AppointmentStatus.SCHEDULED);
             Database.dbAppointment.add(appointment);
             System.out.println("The appointment has been scheduled!");
-            csvReaderWriter.writeToAudit("Scheduled an appointment");
-            csvReaderWriter.writeToCsv("csv/Appointment.csv",appointment);
+            auditService.writeToAudit("Scheduled an appointment");
+            csvReaderWriter.writeToCsv("csv/AppointmentWrite.csv",appointment);
         } else {
             System.out.println("Sorry! We are booked for that day!");
         }
@@ -102,7 +103,7 @@ public class AppointmentServices {
             System.out.println("There is no appointment with this id!");
         } else {
             System.out.println(appointment.details());
-            csvReaderWriter.writeToAudit("Saw appointment details");
+            auditService.writeToAudit("Saw appointment details");
         }
         System.out.println("*************************");
     }
@@ -141,7 +142,7 @@ public class AppointmentServices {
             }
         }
         appointment.setStatus(status);
-        csvReaderWriter.writeToAudit("Changed appointment status");
+        auditService.writeToAudit("Changed appointment status");
     }
 
     public void makeDiagnosis(int id) {
@@ -182,7 +183,7 @@ public class AppointmentServices {
         }
         Diagnosis diagnosis = new Diagnosis(diagnosisName, details, status);
         appointment.setDiagnosis(diagnosis);
-        csvReaderWriter.writeToAudit("Made diagnosis");
+        auditService.writeToAudit("Made diagnosis");
     }
 
     public void prescribeTreatment(int id) {
@@ -212,7 +213,7 @@ public class AppointmentServices {
         treatment.setDurationInWeeks(duration);
         treatment.calculateCost();
         appointment.setTreatment(treatment);
-        csvReaderWriter.writeToAudit("Prescribed treatment");
+        auditService.writeToAudit("Prescribed treatment");
         appointment.getPatient().setAmountToPay(appointment.getPatient().getAmountToPay() + treatment.getCost());
     }
 
