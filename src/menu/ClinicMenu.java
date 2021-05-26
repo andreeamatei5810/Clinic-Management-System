@@ -20,12 +20,18 @@ public class ClinicMenu {
             System.out.println("0. Exit");
             System.out.println("1. Show all wards");
             System.out.println("2. Add a ward");
-            System.out.println("3. Show all medicines");
-            System.out.println("4. Add medicine");
-            System.out.println("5. Show all doctors");
-            System.out.println("6. Add a doctor");
-            System.out.println("7. Show all patients");
-            System.out.println("8. Add a patient");
+            System.out.println("3. Change maximum number of patients for a ward");
+            System.out.println("4. Delete a ward");
+            System.out.println("5. Show all medicines");
+            System.out.println("6. Add medicine");
+            System.out.println("7. Update medicine price");
+            System.out.println("8. Delete medicine");
+            System.out.println("9. Show all doctors");
+            System.out.println("10. Add a doctor");
+            System.out.println("11. Delete a doctor");
+            System.out.println("12. Show all patients");
+            System.out.println("13. Add a patient");
+            System.out.println("14. Delete a patient");
             option = scanner.nextInt();
             switch (option) {
                 case 1: {
@@ -37,27 +43,51 @@ public class ClinicMenu {
                     break;
                 }
                 case 3: {
-                    cs.showAllMedicine();
+                    cs.updateWardPatients();
                     break;
                 }
                 case 4: {
-                    cs.addMedicine();
+                    cs.deleteWard();
                     break;
                 }
                 case 5: {
-                    ds.showAllDoctors();
+                    cs.showAllMedicine();
                     break;
                 }
                 case 6: {
-                    cs.addDoctor();
+                    cs.addMedicine();
                     break;
                 }
                 case 7: {
-                    ps.showAllPatients();
+                    cs.updateMedicinePrice();
                     break;
                 }
                 case 8: {
+                    cs.deleteMedicine();
+                    break;
+                }
+                case 9: {
+                    ds.showAllDoctors();
+                    break;
+                }
+                case 10: {
+                    cs.addDoctor();
+                    break;
+                }
+                case 11: {
+                    cs.deleteDoctor();
+                    break;
+                }
+                case 12: {
+                    ps.showAllPatients();
+                    break;
+                }
+                case 13: {
                     cs.addPatient();
+                    break;
+                }
+                case 14: {
+                    cs.deletePatient();
                     break;
                 }
                 case 0: {

@@ -1,14 +1,14 @@
 package services;
 
-import appointments.Appointment;
-import clinicRelated.Medicine;
-import clinicRelated.Ward;
+import model.appointments.Appointment;
+import model.clinicRelated.Medicine;
+import model.clinicRelated.Ward;
 import db.Database;
-import users.Doctor;
-import users.Patient;
+import repository.*;
+import model.users.Doctor;
+import model.users.Patient;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -17,9 +17,14 @@ public class ClinicServices {
     Scanner scanner = new Scanner(System.in);
     AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
+    static WardRepository wardRepository = new WardRepository();
+    static MedicineRepository medicineRepository = new MedicineRepository();
+    static AppointmentRepository appointmentRepository = new AppointmentRepository();
+    static PatientRepository patientRepository = new PatientRepository();
+    static DoctorRepository doctorRepository = new DoctorRepository();
 
     public void showAllWards() {
-        for (Ward ward : Database.dbWard) {
+        for (Ward ward : wardRepository.getAllWards()) {
             System.out.println(ward);
             System.out.println("*******************************");
         }
@@ -27,36 +32,24 @@ public class ClinicServices {
     }
 
     public static Ward getWard(int id) {
-        for (Ward ward : Database.dbWard) {
-            if (ward.getWardId() == id) {
-                return ward;
-            }
-        }
-        return null;
+        return wardRepository.getWard(id);
     }
 
     public void addWard(){
-        int id = Database.dbWard.size() + 700;
         System.out.println("Ward name: ");
         String name = scanner.next();
         System.out.println("The maximum number of patients per day: ");
         int noPatients = scanner.nextInt();
-
-        Ward ward = new Ward(id,name,noPatients);
-        Database.dbWard.add(ward);
+        Ward ward = new Ward(name,noPatients);
+        wardRepository.insertWard(ward);
         System.out.println("Success!");
         auditService.writeToAudit("Added a ward");
-        csvReaderWriter.writeToCsv("csv/WardWrite.csv",ward);
+   //     csvReaderWriter.writeToCsv("csv/WardWrite.csv",ward);
 
     }
 
     public Ward getWardByName(String name) {
-        for (Ward ward : Database.dbWard) {
-            if (ward.getWardName().toLowerCase().equals(name.toLowerCase())) {
-                return ward;
-            }
-        }
-        return null;
+        return wardRepository.getWardByName(name);
     }
 
     public boolean checkWardAvailability(int wardId, Date date) {
@@ -74,8 +67,39 @@ public class ClinicServices {
         }
     }
 
+    public void updateWardPatients(){
+        System.out.println("Ward name: ");
+        String name = scanner.next();
+        Ward ward = getWardByName(name);
+        if(ward == null){
+            System.out.println("There is no ward with this name");
+        }
+        else {
+            System.out.println("New number of patients: ");
+            int no = scanner.nextInt();
+            wardRepository.updateWardPatients(ward.getWardId(),no);
+            System.out.println("Success!");
+            auditService.writeToAudit("Updated ward number of patients");
+        }
+    }
+
+    public void deleteWard(){
+        System.out.println("Ward name: ");
+        String name = scanner.next();
+        Ward ward = getWardByName(name);
+        if(ward == null){
+            System.out.println("There is no ward with this name");
+        }
+        else {
+
+            wardRepository.deleteWard(ward.getWardId());
+            System.out.println("Success!");
+            auditService.writeToAudit("Deleted ward");
+        }
+    }
+
     public void showAllMedicine() {
-        for (Medicine medicine : Database.dbMedicine) {
+        for (Medicine medicine : medicineRepository.getAllMedicine()) {
             System.out.println(medicine);
             System.out.println("*******************************");
         }
@@ -83,12 +107,7 @@ public class ClinicServices {
     }
 
     public Medicine getMedicine(String name) {
-        for (Medicine medicine : Database.dbMedicine) {
-            if (medicine.getMedicineName().toLowerCase().equals(name.toLowerCase())) {
-                return medicine;
-            }
-        }
-        return null;
+        return medicineRepository.getMedicineByName(name);
     }
 
     public void addMedicine(){
@@ -98,13 +117,44 @@ public class ClinicServices {
         int price = scanner.nextInt();
         System.out.println("Company name: ");
         String companyName = scanner.next();
-
         Medicine medicine = new Medicine(name,price,companyName);
-        Database.dbMedicine.add(medicine);
+        medicineRepository.insertMedicine(medicine);
         System.out.println("Success!");
         auditService.writeToAudit("Added medicine");
-        csvReaderWriter.writeToCsv("csv/MedicineWrite.csv",medicine);
+    //    csvReaderWriter.writeToCsv("csv/MedicineWrite.csv",medicine);
+    }
 
+    public void updateMedicinePrice(){
+        System.out.println("Medicine name: ");
+        String name = scanner.next();
+        Medicine medicine = getMedicine(name);
+        if(medicine == null){
+            System.out.println("There is no medicine with this name");
+        }
+        else {
+            System.out.println("Medicine new price: ");
+            int price = scanner.nextInt();
+            medicineRepository.updateMedicinePrice(medicine.getMedicineId(),price);
+            System.out.println("Success!");
+            auditService.writeToAudit("Updated medicine price");
+        }
+        //    csvReaderWriter.writeToCsv("csv/MedicineWrite.csv",medicine);
+    }
+
+    public void deleteMedicine(){
+        System.out.println("Medicine name: ");
+        String name = scanner.next();
+        Medicine medicine = getMedicine(name);
+        if(medicine == null){
+            System.out.println("There is no medicine with this name");
+        }
+        else {
+
+            medicineRepository.deleteMedicine(medicine.getMedicineId());
+            System.out.println("Success!");
+            auditService.writeToAudit("Deleted medicine");
+        }
+        //    csvReaderWriter.writeToCsv("csv/MedicineWrite.csv",medicine);
     }
 
     public void addDoctor() {
@@ -119,15 +169,9 @@ public class ClinicServices {
 
         System.out.println("Date of birth (format mm-dd-yyyy):");
         String dateBirth = scanner.next();
-        String patternDate = "MM-dd-yyyy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(patternDate);
-        Date dateBirthformat = null;
-        try {
-            dateBirthformat = dateFormat.parse(dateBirth);
-        } catch (ParseException exception) {
-            System.out.println("Invalid birth date!");
-        }
-        if (dateBirthformat == null) {
+        LocalDate date = null;
+        date = LocalDate.parse(dateBirth);
+        if (date == null) {
             return;
         }
 
@@ -140,14 +184,10 @@ public class ClinicServices {
         System.out.println("Address:");
         String address = scanner.next();
 
-        System.out.println("Hire date (format mm-dd-yyyy):");
+        System.out.println("Hire date (format yyyy-mm-dd):");
         String hireDate = scanner.next();
-        Date hireDateformat = null;
-        try {
-            hireDateformat = dateFormat.parse(hireDate);
-        } catch (ParseException exception) {
-            System.out.println("Invalid hire date!");
-        }
+        LocalDate hireDateformat = null;
+        hireDateformat = LocalDate.parse(hireDate);
         if (hireDateformat == null) {
             return;
         }
@@ -163,11 +203,25 @@ public class ClinicServices {
         System.out.println("Salary:");
         int salary = scanner.nextInt();
 
-        Doctor doctor = new Doctor(id, password, firstName, lastName, dateBirthformat, phone, email, address, hireDateformat, salary, ward);
-        Database.dbDoctor.add(doctor);
+        Doctor doctor = new Doctor(id, password, firstName, lastName, date, phone, email, address, hireDateformat, salary, ward);
+        doctorRepository.insertDoctor(doctor);
         System.out.println("Success!");
         auditService.writeToAudit("Added a doctor");
-        csvReaderWriter.writeToCsv("csv/DoctorWrite.csv",doctor);
+    //    csvReaderWriter.writeToCsv("csv/DoctorWrite.csv",doctor);
+    }
+
+    public void deleteDoctor() {
+        System.out.println("Please write the id of the doctor!");
+        int id = scanner.nextInt();
+        Doctor doctor = doctorRepository.getDoctor(id);
+        if(doctor == null){
+            System.out.println("There is no doctor with this id");
+        }
+        else{
+            doctorRepository.deleteDoctor(id);
+            System.out.println("Success!");
+        }
+
     }
 
     public void addPatient() {
@@ -180,17 +234,11 @@ public class ClinicServices {
         System.out.println("Last name:");
         String lastName = scanner.next();
 
-        System.out.println("Date of birth (format mm-dd-yyyy):");
+        System.out.println("Date of birth (format yyyy-mm-dd):");
         String dateBirth = scanner.next();
-        String patternDate = "MM-dd-yyyy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(patternDate);
-        Date dateBirthformat = null;
-        try {
-            dateBirthformat = dateFormat.parse(dateBirth);
-        } catch (ParseException exception) {
-            System.out.println("Invalid birth date!");
-        }
-        if (dateBirthformat == null) {
+        LocalDate date = null;
+        date = LocalDate.parse(dateBirth);
+        if (date == null) {
             return;
         }
 
@@ -206,11 +254,25 @@ public class ClinicServices {
         System.out.println("Blood type:");
         String blood = scanner.next();
 
-        Patient patient = new Patient(id, password, firstName, lastName, dateBirthformat, phone, email, address, blood);
-        Database.dbPatient.add(patient);
+        Patient patient = new Patient(id, password, firstName, lastName, date, phone, email, address, blood);
+        patientRepository.insertPatient(patient);
         System.out.println("Success!");
         auditService.writeToAudit("Added a patient");
-        csvReaderWriter.writeToCsv("csv/PatientWrite.csv",patient);
+    //    csvReaderWriter.writeToCsv("csv/PatientWrite.csv",patient);
+    }
+
+    public void deletePatient() {
+        System.out.println("Please write the id of the patient!");
+        int id = scanner.nextInt();
+        Patient patient = patientRepository.getPatient(id);
+        if(patient == null){
+            System.out.println("There is no doctor with this id");
+        }
+        else{
+            patientRepository.deletePatient(id);
+            System.out.println("Success!");
+        }
+
     }
 
 }

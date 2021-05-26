@@ -1,18 +1,20 @@
 package services;
 
-import appointments.Appointment;
-import appointments.AppointmentStatus;
+import model.appointments.Appointment;
+import model.appointments.AppointmentStatus;
 import db.Database;
-import laboratoryTests.EssentialTest;
-import users.Patient;
+import model.laboratoryTests.EssentialTest;
+import repository.PatientRepository;
+import model.users.Patient;
 
 public class PatientServices {
 
     AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
+    static PatientRepository patientRepository = new PatientRepository();
 
     public void showAllPatients(){
-        for(Patient patient : Database.dbPatient){
+        for(Patient patient : patientRepository.getAllPatients()){
             System.out.println(patient);
             System.out.println("*******************************");
         }
@@ -20,30 +22,15 @@ public class PatientServices {
     }
 
     public void showPatient(int id){
-        for(Patient patient : Database.dbPatient){
-            if(patient.getUserId() == id) {
-                System.out.println(patient);
-                break;
-            }
-        }
+        System.out.println(patientRepository.getPatient(id));
     }
 
     public static Patient getPatient(int id){
-        for(Patient patient : Database.dbPatient){
-            if(patient.getUserId() == id) {
-                return patient;
-            }
-        }
-        return null;
+        return patientRepository.getPatient(id);
     }
 
     public Patient getPatientByEmail(String email){
-        for(Patient patient : Database.dbPatient){
-            if(patient.getEmail().equals(email)) {
-                return patient;
-            }
-        }
-        return null;
+        return patientRepository.getPatientByEmail(email);
     }
 
     public EssentialTest getLabResults(int id){
@@ -62,7 +49,7 @@ public class PatientServices {
                 System.out.println("*******************************");
             }
         }
-        auditService.writeToAudit("Saw future appointments");
+        auditService.writeToAudit("Saw future model.appointments");
     }
 
 }

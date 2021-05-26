@@ -1,9 +1,9 @@
-package users;
+package model.users;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Admin extends User {
-    public Admin(int userId, String password, String firstName, String lastName, Date birthDate, String phoneNumber, String email, String address) {
+    public Admin(int userId, String password, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String email, String address) {
         super(userId, password, firstName, lastName, birthDate, phoneNumber, email, address);
     }
 

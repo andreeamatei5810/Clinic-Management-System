@@ -1,10 +1,10 @@
 package services;
 
-import appointments.*;
-import clinicRelated.Medicine;
-import db.Database;
-import users.Doctor;
-import users.Patient;
+import model.appointments.*;
+import model.clinicRelated.Medicine;
+import repository.AppointmentRepository;
+import model.users.Doctor;
+import model.users.Patient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,14 +19,10 @@ public class AppointmentServices {
     Scanner scanner = new Scanner(System.in);
     AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
+    AppointmentRepository appointmentRepository = new AppointmentRepository();
 
     public Appointment getAppointment(int id) {
-        for (Appointment appointment : Database.dbAppointment) {
-            if (appointment.getAppointmentId() == id) {
-                return appointment;
-            }
-        }
-        return null;
+        return appointmentRepository.getAppointment(id);
     }
 
     public void makeAppointment(String role, int userId) {
@@ -87,11 +83,11 @@ public class AppointmentServices {
         doctor = ds.getDoctor(doctorId);
         patient = ps.getPatient(patientId);
         if (cs.checkWardAvailability(doctor.getWard().getWardId(), appointmentDate)) {
-            Appointment appointment = new Appointment((500 + Database.dbAppointment.size()), patient, doctor, appointmentDate, AppointmentStatus.SCHEDULED);
-            Database.dbAppointment.add(appointment);
+            Appointment appointment = new Appointment(1, patient, doctor, appointmentDate, AppointmentStatus.SCHEDULED);
+            appointmentRepository.insertAppointment(appointment);
             System.out.println("The appointment has been scheduled!");
             auditService.writeToAudit("Scheduled an appointment");
-            csvReaderWriter.writeToCsv("csv/AppointmentWrite.csv",appointment);
+        //    csvReaderWriter.writeToCsv("csv/AppointmentWrite.csv",appointment);
         } else {
             System.out.println("Sorry! We are booked for that day!");
         }
@@ -141,8 +137,22 @@ public class AppointmentServices {
                 }
             }
         }
-        appointment.setStatus(status);
+        appointmentRepository.updateAppointmentStatus(id,status.toString());
         auditService.writeToAudit("Changed appointment status");
+    }
+
+    public void deleteAppointment() {
+        System.out.println("Please write the id of the appointment!");
+        int id = scanner.nextInt();
+        Appointment appointment = getAppointment(id);
+        if(appointment == null){
+            System.out.println("There is no appointment with this id");
+        }
+        else{
+            appointmentRepository.deleteAppointment(id);
+            System.out.println("Success!");
+        }
+
     }
 
     public void makeDiagnosis(int id) {

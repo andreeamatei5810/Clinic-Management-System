@@ -1,6 +1,6 @@
-package laboratoryTests;
+package model.laboratoryTests;
 
-import users.Patient;
+import model.users.Patient;
 
 import java.util.Date;
 

@@ -1,8 +1,8 @@
-package users;
+package model.users;
 
-import laboratoryTests.EssentialTest;
+import model.laboratoryTests.EssentialTest;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -12,7 +12,7 @@ public class Patient extends User {
     private Set<EssentialTest> labTestsHistory = new TreeSet<>();
     private int amountToPay;
 
-    public Patient(int userId, String password, String firstName, String lastName, Date birthDate, String phoneNumber, String email, String address, String bloodType) {
+    public Patient(int userId, String password, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String email, String address, String bloodType) {
         super(userId, password, firstName, lastName, birthDate, phoneNumber, email, address);
         this.bloodType = bloodType;
         this.amountToPay = 0;

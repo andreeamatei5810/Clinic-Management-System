@@ -1,6 +1,6 @@
-package appointments;
+package model.appointments;
 
-import clinicRelated.Medicine;
+import model.clinicRelated.Medicine;
 
 import java.util.HashMap;
 import java.util.Map;

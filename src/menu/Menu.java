@@ -1,6 +1,6 @@
 package menu;
 
-import laboratoryTests.EssentialTest;
+import model.laboratoryTests.EssentialTest;
 import services.AuditService;
 import services.CsvReaderWriter;
 import services.PatientServices;

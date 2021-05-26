@@ -1,15 +1,16 @@
-package users;
+package model.users;
 
-import clinicRelated.Ward;
-import java.util.Date;
+import model.clinicRelated.Ward;
+
+import java.time.LocalDate;
 
 public class Doctor extends User {
 
-    private Date hireDate;
+    private LocalDate hireDate;
     private int salary;
     private Ward ward;
 
-    public Doctor(int userId, String password, String firstName, String lastName, Date birthDate, String phoneNumber, String email, String address, Date hireDate, int salary, Ward ward) {
+    public Doctor(int userId, String password, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String email, String address, LocalDate hireDate, int salary, Ward ward) {
         super(userId, password, firstName, lastName, birthDate, phoneNumber, email, address);
         this.hireDate = hireDate;
         this.salary = salary;
@@ -22,11 +23,11 @@ public class Doctor extends User {
         return super.toString() + "\nSection: " + ward.getWardName() + "\nHire Date: " + hireDate.toString() + "\nSalary: " + salary + " euro";
     }
 
-    public Date getHireDate() {
+    public LocalDate getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Date hireDate) {
+    public void setHireDate(LocalDate hireDate) {
         this.hireDate = hireDate;
     }
 

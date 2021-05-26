@@ -1,4 +1,4 @@
-package appointments;
+package model.appointments;
 
 public enum Severity {
     MINOR,

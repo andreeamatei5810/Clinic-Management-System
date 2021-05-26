@@ -1,8 +1,10 @@
 package services;
 
 import db.Database;
-import users.Doctor;
-import users.Patient;
+import repository.DoctorRepository;
+import repository.PatientRepository;
+import model.users.Doctor;
+import model.users.Patient;
 
 import java.util.Scanner;
 
@@ -11,8 +13,10 @@ public class UserServices {
     Scanner scanner = new Scanner(System.in);
     DoctorServices ds = new DoctorServices();
     PatientServices ps = new PatientServices();
-    AuditService auditService= AuditService.getInstance();
+    AuditService auditService = AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
+    DoctorRepository doctorRepository = new DoctorRepository();
+    PatientRepository patientRepository = new PatientRepository();
 
     public void changePassword(String role, int userId) {
         System.out.println("Enter your new password (at least 4 characters): ");
@@ -23,12 +27,10 @@ public class UserServices {
 
         if (newPassword.equals(confirmedPassword) && newPassword.length() > 3) {
             if (role.equals("Doctor")) {
-                Doctor doctor = ds.getDoctor(userId);
-                doctor.setPassword(newPassword);
+                doctorRepository.updateDoctorPassword(userId,newPassword);
                 System.out.println("The password has been changed!");
             } else if (role.equals("Patient")) {
-                Patient patient = ps.getPatient(userId);
-                patient.setPassword(newPassword);
+                patientRepository.updatePatientPassword(userId,newPassword);
                 System.out.println("The password has been changed!");
             } else {
                 Database.dbAdmin.setPassword(newPassword);

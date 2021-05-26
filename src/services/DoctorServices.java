@@ -1,17 +1,19 @@
 package services;
 
-import appointments.Appointment;
-import appointments.AppointmentStatus;
+import model.appointments.Appointment;
+import model.appointments.AppointmentStatus;
 import db.Database;
-import users.Doctor;
+import repository.DoctorRepository;
+import model.users.Doctor;
 
 public class DoctorServices {
 
     AuditService auditService= AuditService.getInstance();
     CsvReaderWriter csvReaderWriter = CsvReaderWriter.getInstance();
+    static DoctorRepository doctorRepository = new DoctorRepository();
 
     public void showAllDoctors(){
-        for(Doctor doctor : Database.dbDoctor){
+        for(Doctor doctor : doctorRepository.getAllDoctors()){
             System.out.println(doctor);
             System.out.println("*******************************");
         }
@@ -19,7 +21,7 @@ public class DoctorServices {
     }
 
     public void showAllDoctorsByWard(int wardId){
-        for(Doctor doctor : Database.dbDoctor){
+        for(Doctor doctor : doctorRepository.getAllDoctorsByWard(wardId)){
             if(doctor.getWard().getWardId() == wardId) {
                 System.out.println("Id: "+ doctor.getUserId() + ", Name: " + doctor.getFirstName() + " " + doctor.getLastName());
                 System.out.println("*******************************");
@@ -28,30 +30,15 @@ public class DoctorServices {
     }
 
     public void showDoctor(int id){
-        for(Doctor doctor : Database.dbDoctor){
-            if(doctor.getUserId() == id) {
-                System.out.println(doctor);
-                break;
-            }
-        }
+        System.out.println(doctorRepository.getDoctor(id));
     }
 
     public static Doctor getDoctor(int id){
-        for(Doctor doctor : Database.dbDoctor){
-            if(doctor.getUserId() == id) {
-                return doctor;
-            }
-        }
-        return null;
+        return doctorRepository.getDoctor(id);
     }
 
     public Doctor getDoctorByEmail(String email){
-        for(Doctor doctor : Database.dbDoctor){
-            if(doctor.getEmail().equals(email)) {
-                return doctor;
-            }
-        }
-        return null;
+        return doctorRepository.getDoctorByEmail(email);
     }
 
     public void showFutureAppointments(int id){
@@ -61,7 +48,7 @@ public class DoctorServices {
                 System.out.println("*******************************");
             }
         }
-        auditService.writeToAudit("Saw future appointments");
+        auditService.writeToAudit("Saw future model.appointments");
     }
 
 }

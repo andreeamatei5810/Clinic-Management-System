@@ -1,9 +1,9 @@
-package appointments;
+package model.appointments;
 
 import java.util.Date;
 
-import users.Doctor;
-import users.Patient;
+import model.users.Doctor;
+import model.users.Patient;
 
 public class Appointment {
     private int appointmentId;

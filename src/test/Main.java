@@ -2,11 +2,10 @@ package test;
 
 import db.Database;
 import menu.Menu;
-import services.CsvReaderWriter;
 import services.DoctorServices;
 import services.PatientServices;
-import users.Doctor;
-import users.Patient;
+import model.users.Doctor;
+import model.users.Patient;
 
 import java.util.Scanner;
 

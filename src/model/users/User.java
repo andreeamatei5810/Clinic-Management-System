@@ -1,18 +1,18 @@
-package users;
+package model.users;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class User {
     protected int userId;
     protected String password;
     protected String firstName;
     protected String lastName;
-    protected Date birthDate;
+    protected LocalDate birthDate;
     protected String phoneNumber;
     protected String email;
     protected String address;
 
-    public User(int userId, String password, String firstName, String lastName, Date birthDate, String phoneNumber, String email, String address) {
+    public User(int userId, String password, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String email, String address) {
         this.userId = userId;
         this.password = password;
         this.firstName = firstName;
@@ -58,11 +58,11 @@ public abstract class User {
         this.lastName = lastName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

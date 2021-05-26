@@ -1,4 +1,4 @@
-package clinicRelated;
+package model.clinicRelated;
 
 public class Ward {
 
@@ -11,6 +11,12 @@ public class Ward {
         this.wardName = wardName;
         this.maxPatientsPerDay = maxPatientsPerDay;
     }
+
+    public Ward(String wardName, int maxPatientsPerDay) {
+        this.wardName = wardName;
+        this.maxPatientsPerDay = maxPatientsPerDay;
+    }
+
 
     public int getWardId() {
         return wardId;

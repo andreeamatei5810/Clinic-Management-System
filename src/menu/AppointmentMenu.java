@@ -26,6 +26,7 @@ public class AppointmentMenu {
             System.out.println("0. Exit");
             System.out.println("1. Make an appointment");
             System.out.println("2. Change the status of an appointment");
+            System.out.println("3. Delete an appointment");
             option = scanner.nextInt();
             switch (option) {
                 case 1: {
@@ -36,6 +37,10 @@ public class AppointmentMenu {
                     System.out.println("Write the appointment id");
                     int appointmentId = scanner.nextInt();
                     as.changeStatus(appointmentId);
+                    break;
+                }
+                case 3 : {
+                    as.deleteAppointment();
                     break;
                 }
                 case 0: {
@@ -54,7 +59,7 @@ public class AppointmentMenu {
             System.out.println("Write your choice");
             System.out.println("0. Exit");
             System.out.println("1. Make an appointment");
-            System.out.println("2. See future appointments");
+            System.out.println("2. See future model.appointments");
             System.out.println("3. See details of an appointment");
             option = scanner.nextInt();
             switch (option) {
@@ -88,7 +93,7 @@ public class AppointmentMenu {
             System.out.println("Write your choice");
             System.out.println("0. Exit");
             System.out.println("1. Make an appointment");
-            System.out.println("2. See future appointments");
+            System.out.println("2. See future model.appointments");
             System.out.println("3. See details of an appointment");
             System.out.println("4. Change the status of an appointment");
             System.out.println("5. Write a diagnosis");
